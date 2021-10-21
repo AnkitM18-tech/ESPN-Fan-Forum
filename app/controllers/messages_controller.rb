@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
     def index
-
+        @messages = Message.all.order('created_at DESC')
     end
 
     def new
@@ -10,11 +10,15 @@ class MessagesController < ApplicationController
     def create
         @message = Message.new(message_params)
 
-        if @@message.save
+        if @message.save
             redirect_to root_path
         else
             render 'new'
         end  
+    end
+
+    def show
+        @message = Message.find(params[:id])
     end
 
     def update
